@@ -15,6 +15,6 @@ Neuropixels spinal cord recording using Openephys
  ・CDP channel: 銀ボール電極で記録している場合、その信号が入力されているAIの番号<br>
  ・Spike detection channel: スパイク検出結果を表示するチャンネル番号<br>
  ・Nuber of triggers：加算平均回数　多いほど解析に時間を要する<br>
- ・Gain: 解析結果を表示する際の縦軸　大きくすると波形が大きく表示される　大きすぎるようなら小さくすると良い<br>
+ ・Gain: 解析結果を表示する際の縦軸　大きな値を入力すると、波形が大きく表示される　結果を見ながら調整すると良い<br>
 7. OKをクリックする<br>
 8. 解析結果が表示される　結果のFigureは一定時間が経過すると画面からは消えるが、自動的に保存されている<br>
