@@ -1,7 +1,7 @@
 # Oephys_analysis-tools
 Neuropixels spinal cord recording using Openephys
 
-使用方法(h1)
+使用方法 (h1)
 1.全てのファイルにパスを通す<br>
 2.analysis-tools_originalフォルダ内のopen_ephys_disp_exp.mを実行する<br>
 3.GUIが表示されるので、"Setting"の項目で、以下の条件を指定する<br>
