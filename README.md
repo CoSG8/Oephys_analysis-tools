@@ -8,7 +8,7 @@ Neuropixels spinal cord recording using Openephys
  ・PC：解析に使用しているPCのOS<br>
  ・Probe：複数本使用している場合の、解析対象プローブ（1本ずつしか解析できません）<br>
  ・Number of culumns: Neuropixelsの列数（4列1bankか、2列2bankか）<br>
-4. Purposeの項目で、"LFP mapping"を選択する<br>
+4. "Purpose"の項目で、"LFP mapping"を選択する<br>
 5. OKをクリックする<br>
 6. 別のGUIが表示されるので、以下の解析のパラメータを入力する<br>
  ・Trigger channel: 刺激装置のトリガー信号が入力されているAIの番号<br>
