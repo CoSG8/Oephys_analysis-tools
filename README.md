@@ -10,7 +10,7 @@ Neuropixels spinal cord recording using Openephys
 ・Neuropixels <br>
  -version: 1.0<br>
  -本数：3本以下<br>
- -Bank数；2Bank以下<br>
+ -Bank数：2Bank以下<br>
 
 ## 使用方法
 1. 全てのファイルにパスを通す<br>
