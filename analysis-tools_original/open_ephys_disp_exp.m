@@ -1,5 +1,5 @@
 % Programmed by Akito Kosugi
-% v.1.5 06.30.2023
+% v.1.5.1 07.07.2023
 
 clear all
 close all
@@ -21,7 +21,7 @@ open_ephys_disp_gui;
 correntFolder = pwd;
 [fName,dPath] = uigetfile('*.oebin');
 filepath = [dPath,fName];
-if strcmp(PCIdx,1) == 1
+if PCIdx == 1
     idx= findstr(dPath,'\');
 else
     idx= findstr(dPath,'/');
