@@ -1,6 +1,6 @@
 % Neuropixel analysis for peripheral nerve stimulation
 % Programmed by Akito Kosugi
-% v.1.4 07.02.2023
+% v.1.4.1 07.07.2023
 
 clc
 
@@ -13,6 +13,12 @@ cdpGain = 0.2;
 
 trig = data_daq(trigCh,:);
 data_cdp = data_daq(cdpCh,:);
+
+
+%% Check matlab version
+
+ver_temp = version('-release');
+ver = str2num(ver_temp(1:4));
 
 
 %% Pre-processing
@@ -70,16 +76,14 @@ for n = firstTrig:num_maxTrig+firstTrig-1
     trigTime = recStartTime_d3+trigIdx(n)/fs_daq;      
     idxTemp = find(syncTrigTime_d3-trigTime <0);
     idx = max(idxTemp);
-    if syncTrigDiff_all(idx)<0.0002
-        k = k+1;
-        %---AP---%
-        delay = recStartDiff-syncTrigDiff_all(idx)-n*(1/fs_AP); %[s]
-        temp = trigIdx(n)+floor(delay*fs_AP)+fs_AP*time_window(1)/1000+1:trigIdx(n)+floor(delay*fs_AP)+fs_AP*time_window(2)/1000;
-        data_AP_epoch_trig(:,:,k) = filtData_AP(:,temp);
-        %---CDP---%
-        temp = trigIdx(n)+fs_daq*time_window(1)/1000+1:trigIdx(n)+fs_daq*time_window(2)/1000;
-        cdp_epoch_trig(:,k) = filtData_cdp(temp);
-    end
+    k = k+1;
+    %---AP---%
+    delay = recStartDiff-syncTrigDiff_all(idx)-n*(1/fs_AP); %[s]
+    temp = trigIdx(n)+floor(delay*fs_AP)+fs_AP*time_window(1)/1000+1:trigIdx(n)+floor(delay*fs_AP)+fs_AP*time_window(2)/1000;
+    data_AP_epoch_trig(:,:,k) = filtData_AP(:,temp);
+    %---CDP---%
+    temp = trigIdx(n)+fs_daq*time_window(1)/1000+1:trigIdx(n)+fs_daq*time_window(2)/1000;
+    cdp_epoch_trig(:,k) = filtData_cdp(temp);
 end
 data_AP_epoch_trig_mean = squeeze(mean(data_AP_epoch_trig,3));
 cdp_epoch_trig_mean = squeeze(mean(cdp_epoch_trig,2));
@@ -118,8 +122,14 @@ for ch = 1:num_channels
         base = ff(baseIdx);
         sigma_n = median(abs(base)/0.6745);
         spikeTh = spikeThCoef*sigma_n;
+        if ver < 2022
 %         [pks,locs] = findpeaks(abs(ff),'minPeakHeight',spikeTh,'minPeakDistance',intervalTh*fs_AP/1000);
-        [pks,locs] = findpeaks(-ff,'minPeakHeight',spikeTh,'minPeakDistance',intervalTh*fs_AP/1000);
+            [pks,locs] = findpeaks(-ff,'minPeakHeight',spikeTh,'minPeakDistance',intervalTh*fs_AP/1000);
+        else
+            loc_temp = findpeaks(-ff,spikeTh);
+            locs = loc_temp.loc;
+            pks = -ff(locs);
+        end
         if isempty(pks)
             spikeAllData(ch).spikeData(n).spikeNum = 0;
             spikeAllData(ch).spikeData(n).spikeTh = spikeTh;
@@ -145,7 +155,12 @@ time_window = [-100,100]; % [ms]
 time_window_analysis = [0.3,1]; % [ms]
 
 analysisIdx = (time_window_analysis(1)-time_window(1))*fs_daq/1000+1:(time_window_analysis(2)-time_window(1))*fs_daq/1000;
-[pks,locs] = findpeaks(-cdp_epoch_trig_mean(analysisIdx),'minPeakHeight',cdpPeakTh);
+if ver < 2022
+    [pks,locs] = findpeaks(-cdp_epoch_trig_mean(analysisIdx),'minPeakHeight',cdpPeakTh);
+else
+    loc_temp = findpeaks(-cdp_epoch_trig_mean(analysisIdx),cdpPeakTh);
+    locs = loc_temp.loc;
+end
 cdpOnset = time_window_analysis(1)+(locs)*1000/fs_daq;
 
 
