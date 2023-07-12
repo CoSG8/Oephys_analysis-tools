@@ -3,14 +3,14 @@ Neuropixels spinal cord recording using Openephys
 
 ## 要求仕様
 ・PC<br>
- -OS: Windows, Mac, Linux<br>
- -64 bit<br>
- -メモリ：16GB以上<br>
+ ␣-OS: Windows, Mac, Linux<br>
+ ␣-64 bit<br>
+ ␣-メモリ：16GB以上<br>
 ・matlab:R2022b以前<br>
 ・Neuropixels <br>
- -version: 1.0<br>
- -本数：3本以下<br>
- -Bank数：2Bank以下<br>
+ ␣-version: 1.0<br>
+ ␣-本数：3本以下<br>
+ ␣-Bank数：2Bank以下<br>
 
 ## 使用方法
 1. 全てのファイルにパスを通す<br>
